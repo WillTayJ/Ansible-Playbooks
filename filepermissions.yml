@@ -1,0 +1,9 @@
+---
+- name: Change file permissions
+  hosts: all
+
+  tasks:
+  - name: File permissions
+    file:
+      path: /root/Documents/file1
+      mode: a+w #gives user group and others write permissions
