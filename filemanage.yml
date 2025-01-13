@@ -1,0 +1,31 @@
+---
+- name: Create and Remove file
+  hosts: all
+  tasks:
+
+  - name: Create a directory
+    file:
+      path: /tmp/dir1
+      owner: wtaylor
+      group: developers
+      mode: 770
+      state: directory
+
+  - name: Create a file in directory
+    file:
+      path: /tmp/dir1/file1
+      state: touch
+
+  - name: Stat the new file 
+    stat:
+      path: /tmp/dir1/file1
+    register: f1
+
+  - name: Show file status
+    debug:
+      msg: File status and attributes {{ f1 }}
+
+  - name: Remove file
+    file:
+      path: /tmp/dir1/file1
+      state: absent
