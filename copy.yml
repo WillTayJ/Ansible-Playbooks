@@ -1,0 +1,14 @@
+---
+- name : copy file from local to remote
+  hosts: all
+
+  tasks:
+  - name: Copying file
+    become: true
+    copy:
+      src: /home/wtaylor/Testfile333
+      dest: /tmp/file222
+      ### change ownership and file permissions
+      #owner: bob ##user needs to already be on client
+      #group : developers #group needs to already be on client
+      #mode:0644
