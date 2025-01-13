@@ -1,0 +1,14 @@
+---
+- name: Create a file and add text
+  hosts: localhost
+
+  tasks:
+  - name: Create a new file
+    file:
+      path: /tmp/Ansible_fun.txt
+      state: touch
+
+  - name: Add text to the file
+    blockinfile:
+      path: /tmp/Ansible_fun.txt
+      block: I earned my RHCSA certification Dec 31, 2024 and I am on track to earning my RHCE in 2025
