@@ -1,0 +1,7 @@
+---
+- name: Playbook for shell script
+  hosts: 10.0.0.241
+
+  tasks:
+  - name:
+    shell: "/home/bob/scripts/sample.sh"
