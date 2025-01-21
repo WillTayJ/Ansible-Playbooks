@@ -1,0 +1,10 @@
+---
+- name: Creating user
+  hosts: all
+
+  tasks:
+    - name: Create users
+      user:
+        name: jtolen
+        home: /home/jtolen
+        shell: /bin/bash
