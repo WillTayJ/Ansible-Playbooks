@@ -1,0 +1,11 @@
+---
+- name: Add or update user password
+  hosts: all
+
+  tasks:
+    - name: Change user password
+      user:
+        name: jtolen
+        update_password: always
+          # when running password update playbook add this paramter at end with desired password --extra-vars newpassword=password
+        password: "{{ newpassword|password_hash('sha512') }}"
