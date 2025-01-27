@@ -1,0 +1,14 @@
+---
+- name: Find a process and kill it
+  hosts: all
+
+  tasks:
+  - name:
+    ignore_errors: yes
+    shell: "ps -few | grep -w top |awk '{print $2}'"
+    register: running_process
+
+  - name: Kill running process
+    ignore_errors: yes
+    shell: "kill {{ item }}"
+    with_items: "{{ running_process.stdout_lines }}"
