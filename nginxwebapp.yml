@@ -1,0 +1,55 @@
+- name: Configure nginx
+  hosts: clients
+  collections:
+    - ansible.posix
+
+  tasks:
+    - name: install nginx
+      dnf:
+        name=nginx
+
+    - name: install firewalld
+      dnf:
+        name: firewalld
+        state: latest
+
+    - name: copy nginx config file
+      copy:
+        src: /etc/nginx.conf
+        dest: /etc/nginx/conf.d/localhost.conf
+
+    - name: copy index.html
+      copy:
+        src=/home/wtaylor/webApp/index.html
+        dest=/usr/share/nginx/html/index.html
+        mode=0644
+      tags: ['deploy']
+
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+      tags: ['deploy']
+
+    - name: Check status 200 and fail if incorrect page contents
+      uri:
+        url: http://localhost/index.html
+        return_content: yes
+      register: response
+      tags: ['deploy']
+
+    - name: Print result
+      debug:
+        var: response.content
+      tags: ['deploy', 'test']
+
+    - name: permit traffic in default zone for http service
+      firewalld:
+        service: http
+        permanent: true
+        state: enabled
+
+    - name: restart firewalld
+      service:
+        name=firewalld
+        state=restarted
