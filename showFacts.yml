@@ -1,0 +1,7 @@
+- name: Show facts
+  hosts: clients
+
+  tasks:
+  - name: Print the facts gathered
+    debug:
+      var: ansible_facts
